@@ -81,7 +81,7 @@ public class MealService {
                     month, year, messId
             ).orElse(new ArrayList<>());
 
-            List<User> users = userRepository.findByMess_Id(messId).orElse(null);
+            List<User> users = userRepository.findAllByMess_Id(messId).orElse(null);
             if (users == null) {
                 return response.error("No users found for this mess.");
             }

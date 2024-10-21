@@ -42,6 +42,7 @@ public class Purchase {
     @Temporal(TemporalType.DATE)
     Date date;
 
+    @NotNull(message = "User is required")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

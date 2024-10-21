@@ -6,6 +6,8 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -70,12 +72,35 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(UnexpectedRollbackException.class)
+    public ApiResponse handleUnexpectedRollbackException(UnexpectedRollbackException ex) {
+        return new ApiResponse(
+                "Transaction Rollback",
+                null,
+                Map.of("error", "The transaction has been rolled back unexpectedly: " + ex.getMessage()),
+                false
+        );
+    }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ApiResponse handleNoSuchElementException(NoSuchElementException ex) {
         return new ApiResponse(
                 "Not Found",
                 null,
                 null,
+                false
+        );
+    }
+
+    @ExceptionHandler(TransactionSystemException.class)
+    public ApiResponse handleTransactionSystemException(TransactionSystemException ex) {
+        Throwable rootCause = ex.getRootCause();
+        String errorMessage = rootCause != null ? rootCause.getMessage() : "Transaction error occurred.";
+
+        return new ApiResponse(
+                "Transaction Error",
+                null,
+                Map.of("error", errorMessage),
                 false
         );
     }

@@ -19,12 +19,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findById(Long userId);
-
     Optional<User> findByCell(String cell);
 
     Optional<User> findByIdAndMess_Id(Long userId, Long messId);
 
-    Optional<List<User>> findByMess_Id(Long messId);
+    Optional<List<User>> findAllByMess_Id(Long messId);
 
 }

@@ -4,6 +4,8 @@ import com.shabab.mezz.core.model.Purchase;
 import com.shabab.mezz.core.repository.MessRepository;
 import com.shabab.mezz.core.repository.PurchaseRepository;
 import com.shabab.mezz.security.model.Mess;
+import com.shabab.mezz.security.model.User;
+import com.shabab.mezz.security.repository.UserRepository;
 import com.shabab.mezz.util.ApiResponse;
 import com.shabab.mezz.util.AuthUtil;
 import jakarta.transaction.Transactional;
@@ -28,10 +30,19 @@ public class PurchaseService {
     @Autowired
     private MessRepository messRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Transactional(rollbackOn = Exception.class)
     public ApiResponse savePurchase(Purchase purchase) {
         ApiResponse response = new ApiResponse();
         try {
+            User user = userRepository.findByIdAndMess_Id(
+                    purchase.getUser().getId(), AuthUtil.getCurrentMessId()
+            ).orElse(null);
+            if (user == null) {
+                return response.error("User not found");
+            }
             Mess mess = messRepository.findById(
                     AuthUtil.getCurrentMessId()
             ).orElse(null);
