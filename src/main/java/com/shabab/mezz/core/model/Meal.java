@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * Project: Mezz-SpringBoot
@@ -19,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "core_meals")
 public class Meal {
 
