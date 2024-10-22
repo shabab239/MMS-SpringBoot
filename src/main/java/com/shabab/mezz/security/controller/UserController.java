@@ -1,5 +1,6 @@
 package com.shabab.mezz.security.controller;
 
+import com.shabab.mezz.core.dto.LoginDTO;
 import com.shabab.mezz.security.model.User;
 import com.shabab.mezz.security.service.UserService;
 import com.shabab.mezz.util.ApiResponse;
@@ -20,6 +21,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @PostMapping("/isLoggedIn")
+    public ApiResponse isLoggedIn() {
+        return new ApiResponse(true);
+    }
 
     @GetMapping("/")
     public ApiResponse getAllUsers() {

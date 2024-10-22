@@ -1,5 +1,6 @@
 package com.shabab.mezz.security.controller;
 
+import com.shabab.mezz.core.dto.LoginDTO;
 import com.shabab.mezz.security.service.AuthService;
 import com.shabab.mezz.util.ApiResponse;
 import jakarta.validation.Valid;
@@ -22,10 +23,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ApiResponse login(
-            @RequestParam(required = false) String cell,
-            @RequestParam(required = false) String password
+            @RequestBody LoginDTO loginDTO
     ) {
-        return authService.authenticate(cell, password);
+        return authService.authenticate(loginDTO);
     }
 
 }

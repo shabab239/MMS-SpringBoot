@@ -1,5 +1,6 @@
 package com.shabab.mezz.security.service;
 
+import com.shabab.mezz.core.dto.LoginDTO;
 import com.shabab.mezz.security.jwt.JwtService;
 import com.shabab.mezz.security.model.User;
 import com.shabab.mezz.util.ApiResponse;
@@ -28,8 +29,11 @@ public class AuthService {
     private JwtService jwtService;
 
 
-    public ApiResponse authenticate(String cell, String password) {
+    public ApiResponse authenticate(LoginDTO loginDTO) {
         ApiResponse apiResponse = new ApiResponse();
+
+        String cell = loginDTO.getCell();
+        String password = loginDTO.getPassword();
 
         if (cell == null || cell.isEmpty()) {
             return apiResponse.error("Cell is required");

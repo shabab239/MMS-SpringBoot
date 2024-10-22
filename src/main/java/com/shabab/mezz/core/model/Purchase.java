@@ -1,5 +1,6 @@
 package com.shabab.mezz.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shabab.mezz.security.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -40,6 +41,7 @@ public class Purchase {
     @NotNull(message = "Date is required")
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a")
     Date date;
 
     @NotNull(message = "User is required")
