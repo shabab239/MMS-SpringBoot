@@ -32,6 +32,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/getDashboardInfo")
+    public ApiResponse getDashboardInfo() {
+        return userService.getDashboardInfo();
+    }
+
     @PostMapping("/save")
     public ApiResponse saveUser(@Valid @RequestBody User user) {
         return userService.saveUser(user);
